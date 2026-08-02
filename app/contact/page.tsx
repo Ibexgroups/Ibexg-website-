@@ -103,7 +103,7 @@ export default function ContactPage() {
         </div>
       </section>
 
-      <section className="bg-[#F8FAFC] pb-16">
+      <section className="bg-ivory-deep pb-16">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <div className="overflow-hidden rounded-2xl border border-border">

@@ -5,7 +5,7 @@ export const COMPANY = {
   founded: 2006,
   tagline: "Strong Foundation • Smarter Futures • Lasting Legacy",
   description:
-    "IBEX Investments Group has been operating in the gas station and convenience retail industry since 2006. We specialize in acquiring, operating, improving, and expanding gas stations and commercial properties across multiple states in the United States.",
+    "Since 2006, IBEX Investments Group has acquired, operated, and expanded gas stations and franchise businesses across multiple U.S. states. We buy and sell properties, structure sale-leasebacks, pay strong NNN rents, supply fuel through major brand dealerships, and help operators compete and grow — with a $200M+ asset portfolio built for continued expansion.",
   address: {
     street: "55 Calvarese Dr",
     city: "Bear",
@@ -46,8 +46,7 @@ export const SERVICES = [
     icon: "Fuel",
     cta: "Request an Offer",
     href: "/contact",
-    image:
-      "https://images.unsplash.com/photo-1574263867129-91466a5fef45?w=900&q=80",
+    image: "/hero/05-station-night.jpg",
   },
   {
     title: "Operations & Performance Improvement",
@@ -56,8 +55,7 @@ export const SERVICES = [
     icon: "TrendingUp",
     cta: "Learn How We Operate",
     href: "/services",
-    image:
-      "https://images.unsplash.com/photo-1604719312566-8912a92a1b02?w=900&q=80",
+    image: "/hero/06-fuel-highway.jpg",
   },
   {
     title: "Sale-Leaseback Transactions",
@@ -66,8 +64,7 @@ export const SERVICES = [
     icon: "Handshake",
     cta: "Explore Sale-Leaseback",
     href: "/contact",
-    image:
-      "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=900&q=80",
+    image: "/hero/02-buildings.jpg",
   },
   {
     title: "Triple Net (NNN) Lease Partnerships",
@@ -76,8 +73,7 @@ export const SERVICES = [
     icon: "FileText",
     cta: "Partner With IBEX",
     href: "/contact",
-    image:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?w=900&q=80",
+    image: "/hero/04-business.jpg",
   },
   {
     title: "Fuel Retail Management",
@@ -86,8 +82,7 @@ export const SERVICES = [
     icon: "Store",
     cta: "View Our Network",
     href: "/properties",
-    image:
-      "https://images.unsplash.com/photo-1597764694900-55d837a7a1c4?w=900&q=80",
+    image: "/hero/07-fuel-glow.jpg",
   },
   {
     title: "Operator Profitability Support",
@@ -96,8 +91,7 @@ export const SERVICES = [
     icon: "BarChart3",
     cta: "Talk to Our Team",
     href: "/contact",
-    image:
-      "https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?w=900&q=80",
+    image: "/hero/03-growth.jpg",
   },
 ] as const;
 
@@ -153,21 +147,63 @@ export const WHY_CHOOSE_US = [
 ] as const;
 
 export const FUEL_BRANDS = [
-  "Exxon",
-  "Shell",
-  "Chevron",
-  "Valero",
-  "Marathon",
+  { name: "Exxon", logo: "/brands/exxon.svg", glow: "rgba(237,28,36,0.35)" },
+  { name: "Shell", logo: "/brands/shell.svg", glow: "rgba(255,209,0,0.4)" },
+  { name: "Chevron", logo: "/brands/chevron.svg", glow: "rgba(0,51,160,0.35)" },
+  { name: "Valero", logo: "/brands/valero.svg", glow: "rgba(0,51,160,0.35)" },
+  { name: "Marathon", logo: "/brands/marathon.svg", glow: "rgba(227,24,55,0.35)" },
 ] as const;
 
 export const FRANCHISE_PARTNERS = [
-  "Burger King",
-  "Pizza Hut",
-  "Denny's",
-  "Church's Chicken",
-  "Krispy Krunchy Chicken",
-  "Brother's Pizza",
-  "Smashburger",
+  {
+    name: "Burger King",
+    logo: "/brands/burger-king.svg",
+    description: "A national QSR brand that drives traffic and strengthens convenience retail performance.",
+    image: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=900&q=80",
+    glow: "rgba(214,35,0,0.35)",
+  },
+  {
+    name: "Pizza Hut",
+    logo: "/brands/pizza-hut.svg",
+    description: "A trusted pizza brand that adds foodservice value and customer loyalty to our locations.",
+    image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?w=900&q=80",
+    glow: "rgba(238,58,36,0.35)",
+  },
+  {
+    name: "Denny's",
+    logo: "/brands/dennys.svg",
+    description: "An iconic American diner brand that expands dining options across our multi-state network.",
+    image: "https://images.unsplash.com/photo-1559339352-11d035aa65de?w=900&q=80",
+    glow: "rgba(255,102,0,0.35)",
+  },
+  {
+    name: "Church's Chicken",
+    logo: "/brands/churchs.svg",
+    description: "A proven chicken franchise that complements fuel retail and boosts in-store visits.",
+    image: "https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=900&q=80",
+    glow: "rgba(200,16,46,0.3)",
+  },
+  {
+    name: "Krispy Krunchy Chicken",
+    logo: "/brands/krispy-krunchy.svg",
+    description: "A fast-growing chicken brand that enhances convenience store food offerings.",
+    image: "https://images.unsplash.com/photo-1562967914-608f82629710?w=900&q=80",
+    glow: "rgba(227,24,55,0.3)",
+  },
+  {
+    name: "Brother's Pizza",
+    logo: "/brands/brothers-pizza.svg",
+    description: "A pizza partner that supports strong local demand and repeat customer traffic.",
+    image: "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=900&q=80",
+    glow: "rgba(185,28,28,0.3)",
+  },
+  {
+    name: "Smashburger",
+    logo: "/brands/smashburger.svg",
+    description: "A premium burger brand that elevates the customer experience at IBEX locations.",
+    image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=900&q=80",
+    glow: "rgba(17,17,17,0.25)",
+  },
 ] as const;
 
 export const INVESTMENT_OPPORTUNITIES = [

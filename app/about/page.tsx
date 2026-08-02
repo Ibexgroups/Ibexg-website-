@@ -89,7 +89,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="section-padding bg-[#F8FAFC]">
+      <section className="section-padding bg-ivory-deep">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionTitle

@@ -28,7 +28,7 @@ export default function CareersPage() {
     <>
       <PageHeader
         title="Careers at IBEX"
-        subtitle="Join a growing team that's building America's fuel network. Explore opportunities across our nationwide operations."
+        subtitle="Join a growing multi-state investment group expanding gas stations, franchise brands, and commercial operations across the United States."
         backgroundImage="https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=1920&q=80"
       />
 
@@ -82,7 +82,7 @@ export default function CareersPage() {
         </div>
       </section>
 
-      <section className="section-padding bg-[#F8FAFC]">
+      <section className="section-padding bg-ivory-deep">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionTitle

@@ -4,7 +4,7 @@ import { TestimonialSlider } from "@/components/shared/testimonial-slider";
 
 export function Testimonials() {
   return (
-    <section className="section-padding bg-white">
+    <section className="section-padding bg-ivory">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <SectionTitle

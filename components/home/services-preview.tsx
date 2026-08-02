@@ -6,13 +6,13 @@ import { BrandButton } from "@/components/ui/brand-button";
 
 export function ServicesPreview() {
   return (
-    <section className="section-padding overflow-hidden bg-white">
+    <section className="section-padding overflow-hidden bg-ivory">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <SectionTitle
             badge="Our Business Model"
             title="How IBEX Creates Value"
-            subtitle="Swipe through our services — from acquisitions and operations to sale-leaseback and Triple Net (NNN) partnerships."
+            subtitle="Watch each service come forward — acquisitions, operations, sale-leaseback, and NNN partnerships."
             className="mb-8 md:mb-10"
           />
         </AnimatedSection>

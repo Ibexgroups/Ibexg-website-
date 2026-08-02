@@ -5,24 +5,30 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --navy: #0b1f3a;
-  --navy-light: #1a3a5c;
+  /* Premium palette: Charcoal + Warm Gold + Soft Ivory */
+  --navy: #141820;
+  --navy-light: #1c2430;
+  --charcoal: #141820;
+  --charcoal-light: #1c2430;
+  --charcoal-panel: #222a36;
+  --ivory: #f7f5f1;
+  --ivory-deep: #efebe3;
   --gold: #d4af37;
   --gold-light: #e8c547;
   --gold-dark: #b8962e;
-  --muted: oklch(0.97 0 0);
-  --border: oklch(0.922 0 0);
-  --card: oklch(1 0 0);
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted-foreground: #64748b;
+  --muted: #f7f5f1;
+  --border: #e6e1d8;
+  --card: #ffffff;
+  --background: #f7f5f1;
+  --foreground: #0e1218;
+  --card-foreground: #0e1218;
+  --popover: #ffffff;
+  --popover-foreground: #0e1218;
+  --primary: #141820;
+  --primary-foreground: #f7f5f1;
+  --secondary: #efebe3;
+  --secondary-foreground: #141820;
+  --muted-foreground: #8b929c;
   --accent: oklch(0.97 0 0);
   --accent-foreground: oklch(0.205 0 0);
   --destructive: oklch(0.577 0.245 27.325);
@@ -49,6 +55,11 @@
   --color-foreground: var(--foreground);
   --color-navy: var(--navy);
   --color-navy-light: var(--navy-light);
+  --color-charcoal: var(--charcoal);
+  --color-charcoal-light: var(--charcoal-light);
+  --color-charcoal-panel: var(--charcoal-panel);
+  --color-ivory: var(--ivory);
+  --color-ivory-deep: var(--ivory-deep);
   --color-gold: var(--gold);
   --color-gold-light: var(--gold-light);
   --color-gold-dark: var(--gold-dark);
@@ -131,27 +142,70 @@ h6 {
   background-clip: text;
 }
 
-/* Services carousel — perfect center snap + card width */
-.services-track {
-  --card-w: min(86vw, 340px);
-  --side-pad: calc((100% - var(--card-w)) / 2);
-  padding-inline: var(--side-pad);
-  scroll-padding-inline: var(--side-pad);
+/* Franchise Upwork-style card slider */
+.franchise-track {
+  --franchise-card-w: min(82vw, 320px);
+  --franchise-pad: calc((100% - var(--franchise-card-w)) / 2);
+  scroll-padding-inline: var(--franchise-pad);
 }
 
-.services-card {
-  width: var(--card-w);
+.franchise-card {
+  width: var(--franchise-card-w);
 }
 
 @media (min-width: 640px) {
-  .services-track {
-    --card-w: min(62vw, 380px);
+  .franchise-track {
+    --franchise-card-w: min(58vw, 360px);
   }
 }
 
 @media (min-width: 1024px) {
-  .services-track {
-    --card-w: min(42vw, 400px);
+  .franchise-track {
+    --franchise-card-w: min(38vw, 380px);
+  }
+}
+
+/* Fuel brand logo marquee */
+.brand-marquee {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+}
+
+.brand-marquee-track {
+  animation: brand-marquee-scroll 38s linear infinite;
+}
+
+.brand-marquee:hover .brand-marquee-track {
+  animation-play-state: paused;
+}
+
+.brand-marquee--reverse .brand-marquee-track {
+  animation-name: brand-marquee-scroll-reverse;
+  animation-duration: 42s;
+}
+
+@keyframes brand-marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-33.333%);
+  }
+}
+
+@keyframes brand-marquee-scroll-reverse {
+  from {
+    transform: translateX(-33.333%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brand-marquee-track {
+    animation: none;
   }
 }
 
@@ -217,7 +271,7 @@ h6 {
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-ivory text-foreground antialiased;
   }
   html {
     @apply font-sans;
