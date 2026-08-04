@@ -156,7 +156,13 @@ export function Footer() {
             &copy; {currentYear} {COMPANY.name}. All rights reserved.
           </p>
           <p className="text-center text-sm text-white/40 md:text-right">
-            Owned by <span className="text-gold/80">{COMPANY.owner}</span>
+            <span className="text-gold/80">{COMPANY.ceo}</span>
+            <span className="text-white/30"> · </span>
+            CEO
+            <span className="mx-2 text-white/25">|</span>
+            <span className="text-gold/80">{COMPANY.vicePresident}</span>
+            <span className="text-white/30"> · </span>
+            Vice President
           </p>
         </div>
       </div>

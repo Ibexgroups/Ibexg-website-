@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Oversized source media (site uses compressed web versions)
+/public/hero/272861_medium.mp4
+/public/hero/hero-short.mp4
+/public/videos/station-cinematic.mp4

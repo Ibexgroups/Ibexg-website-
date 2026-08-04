@@ -16,7 +16,7 @@ export function AcquisitionCTA() {
       {/* Full-bleed atmosphere — no inset box */}
       <div className="absolute inset-0" aria-hidden="true">
         <Image
-          src="/hero/07-fuel-glow.jpg"
+          src="/hero/01-refinery-dawn.jpg"
           alt=""
           fill
           className="object-cover opacity-35"
@@ -82,7 +82,7 @@ export function AcquisitionCTA() {
             <div className="absolute -inset-4 rounded-[2rem] bg-gold/10 blur-2xl" aria-hidden="true" />
             <div className="relative h-full overflow-hidden rounded-[2rem] border border-gold/25 shadow-[0_30px_80px_rgba(0,0,0,0.45)]">
               <Image
-                src="/hero/05-station-night.jpg"
+                src="/hero/11-shell-night.jpg"
                 alt="Gas station acquisition opportunity"
                 fill
                 className="object-cover"

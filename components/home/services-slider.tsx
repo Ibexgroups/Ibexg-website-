@@ -77,7 +77,8 @@ export function ServicesSlider() {
                 alt={service.title}
                 fill
                 priority={active === 0}
-                quality={85}
+                quality={100}
+                unoptimized
                 sizes="100vw"
                 className="object-cover"
               />

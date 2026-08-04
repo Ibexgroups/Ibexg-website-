@@ -5,7 +5,7 @@ import { AnimatedSection } from "@/components/shared/animated-section";
 import { SectionTitle } from "@/components/shared/section-title";
 import { StatCounter } from "@/components/shared/stat-counter";
 import { BrandButton } from "@/components/ui/brand-button";
-import { CORE_VALUES, COMPANY, STATS } from "@/lib/constants";
+import { CORE_VALUES, COMPANY, STATS, LEADERSHIP } from "@/lib/constants";
 import { CTABanner } from "@/components/shared/cta-banner";
 
 export const metadata: Metadata = {
@@ -39,8 +39,9 @@ export default function AboutPage() {
                   commercial properties across multiple states in the United States.
                 </p>
                 <p>
-                  Under the leadership of {COMPANY.owner}, IBEX has grown a $200M+ asset portfolio
-                  with 90+ operating locations. Our trusted fuel distribution network and multi-state
+                  Under the leadership of CEO {COMPANY.ceo} and Vice President{" "}
+                  {COMPANY.vicePresident}, IBEX has grown a $200M+ asset portfolio with 90+
+                  operating locations. Our trusted fuel distribution network and multi-state
                   operations support long-term investor partnerships and continuous expansion.
                 </p>
                 <p>
@@ -55,16 +56,20 @@ export default function AboutPage() {
               <div className="rounded-2xl bg-navy p-8 md:p-10">
                 <h3 className="font-heading text-2xl font-bold text-white">Leadership</h3>
                 <p className="mt-4 text-white/70 leading-relaxed">
-                  {COMPANY.owner} leads IBEX Investments Group with a commitment to integrity,
-                  growth, and excellence. His vision has guided the company from its founding in{" "}
-                  {COMPANY.founded} to a multi-state investment organization with a substantial
-                  commercial asset portfolio.
+                  Led by CEO {COMPANY.ceo} and Vice President {COMPANY.vicePresident}, IBEX
+                  Investments Group is built on integrity, growth, and excellence — guiding the
+                  company from its founding in {COMPANY.founded} to a multi-state investment
+                  organization with a substantial commercial asset portfolio.
                 </p>
-                <div className="mt-8 border-t border-white/10 pt-8">
-                  <p className="text-sm text-white/50">Owner & Founder</p>
-                  <p className="mt-1 font-heading text-xl font-semibold text-gold">
-                    {COMPANY.owner}
-                  </p>
+                <div className="mt-8 space-y-6 border-t border-white/10 pt-8">
+                  {LEADERSHIP.map((person) => (
+                    <div key={person.name}>
+                      <p className="text-sm text-white/50">{person.title}</p>
+                      <p className="mt-1 font-heading text-xl font-semibold text-gold">
+                        {person.name}
+                      </p>
+                    </div>
+                  ))}
                 </div>
               </div>
             </AnimatedSection>

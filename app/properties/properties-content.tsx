@@ -1,68 +1,106 @@
 "use client";
 
-import { useState } from "react";
+import dynamic from "next/dynamic";
 import { PageHeader } from "@/components/shared/page-header";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { SectionTitle } from "@/components/shared/section-title";
-import { PropertyCard } from "@/components/shared/property-card";
 import { CTABanner } from "@/components/shared/cta-banner";
-import { PROPERTIES } from "@/lib/constants";
-import { cn } from "@/lib/utils";
+import { PORTFOLIO_LOCATIONS } from "@/lib/constants";
 
-const FILTERS = ["All", "Gas Station", "Convenience Store", "Commercial", "Fuel Distribution"];
+const PortfolioMap = dynamic(
+  () =>
+    import("@/components/properties/portfolio-map").then((m) => m.PortfolioMap),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="flex h-[440px] items-center justify-center rounded-3xl border border-charcoal/10 bg-ivory text-sm text-muted">
+        Loading portfolio map…
+      </div>
+    ),
+  }
+);
+
+const byState = {
+  Texas: PORTFOLIO_LOCATIONS.filter((p) => p.state === "Texas"),
+  Louisiana: PORTFOLIO_LOCATIONS.filter((p) => p.state === "Louisiana"),
+  Mississippi: PORTFOLIO_LOCATIONS.filter((p) => p.state === "Mississippi"),
+} as const;
 
 export function PropertiesContent() {
-  const [activeFilter, setActiveFilter] = useState("All");
-
-  const filtered =
-    activeFilter === "All"
-      ? PROPERTIES
-      : PROPERTIES.filter((p) => p.type === activeFilter);
-
   return (
     <>
       <PageHeader
         title="Our Properties"
-        subtitle="Explore IBEX Investments Group's portfolio of gas stations, convenience stores, and commercial properties nationwide."
-        backgroundImage="https://images.unsplash.com/photo-1604719312566-8912a92a1b02?w=1920&q=80"
+        subtitle="Multi-state portfolio across Texas, Louisiana, and Mississippi — gas stations and related retail assets."
+        backgroundImage="/hero/33-skyline-invest.jpg"
       />
+
+      <section className="section-padding bg-ivory">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <SectionTitle
+              badge="Portfolio Map"
+              title="Multi-State Portfolio Profile"
+              subtitle="Explore IBEX locations on the map. Filter by state, click a pin for details, or open any site in Google Maps."
+            />
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.08}>
+            <PortfolioMap />
+          </AnimatedSection>
+        </div>
+      </section>
 
       <section className="section-padding bg-white">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <AnimatedSection>
             <SectionTitle
-              badge="Portfolio"
-              title="Nationwide Property Network"
-              subtitle="90+ operating locations and growing — strategically positioned across key markets in the United States."
+              badge="By State"
+              title="Portfolio Listings"
+              subtitle={`${PORTFOLIO_LOCATIONS.length} properties across Texas, Louisiana, and Mississippi.`}
             />
           </AnimatedSection>
 
-          <div className="mb-10 flex flex-wrap justify-center gap-3">
-            {FILTERS.map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={cn(
-                  "rounded-full px-5 py-2 text-sm font-medium transition-all duration-300",
-                  activeFilter === filter
-                    ? "bg-navy text-white shadow-lg shadow-navy/20"
-                    : "border border-border bg-white text-muted-foreground hover:border-gold hover:text-navy"
-                )}
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
-
-          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((property, i) => (
-              <AnimatedSection key={property.id} delay={i * 0.08}>
-                <PropertyCard
-                  title={property.title}
-                  location={property.location}
-                  type={property.type}
-                  image={property.image}
-                />
+          <div className="space-y-12">
+            {(Object.keys(byState) as Array<keyof typeof byState>).map((state) => (
+              <AnimatedSection key={state}>
+                <h3 className="font-heading text-xl font-bold text-charcoal sm:text-2xl">
+                  {state} Portfolio
+                </h3>
+                <div className="mt-4 overflow-x-auto rounded-2xl border border-charcoal/10">
+                  <table className="min-w-full text-left text-sm">
+                    <thead className="bg-charcoal text-white">
+                      <tr>
+                        <th className="px-4 py-3 font-semibold">Property</th>
+                        <th className="px-4 py-3 font-semibold">Asking Price</th>
+                        <th className="px-4 py-3 font-semibold">Status</th>
+                        <th className="px-4 py-3 font-semibold">Fuel Contract</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {byState[state].map((row, i) => (
+                        <tr
+                          key={row.id}
+                          className={i % 2 === 0 ? "bg-white" : "bg-ivory/60"}
+                        >
+                          <td className="px-4 py-3 font-medium text-charcoal">
+                            <a
+                              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(row.address)}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="hover:text-gold hover:underline"
+                            >
+                              {row.address}
+                            </a>
+                          </td>
+                          <td className="px-4 py-3 text-gold font-semibold">{row.price}</td>
+                          <td className="px-4 py-3 text-muted">{row.status}</td>
+                          <td className="px-4 py-3 text-muted">{row.fuelContract}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </AnimatedSection>
             ))}
           </div>

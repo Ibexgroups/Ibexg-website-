@@ -109,7 +109,7 @@ export default function ContactPage() {
             <div className="overflow-hidden rounded-2xl border border-border">
               <iframe
                 title="IBEX Investments Group office location"
-                src="https://maps.google.com/maps?q=55+Calvarese+Dr,+Bear,+DE+19701&output=embed"
+                src="https://maps.google.com/maps?q=45+E+Main+Street,+Unit+203,+Newark,+DE+19711&output=embed"
                 className="h-80 w-full border-0 md:h-96"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"

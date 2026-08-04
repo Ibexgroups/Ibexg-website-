@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { getIcon } from "@/lib/icons";
 import { cn } from "@/lib/utils";
@@ -21,10 +20,11 @@ export function CompanyCard({
   const IconComponent = getIcon(icon);
 
   return (
-    <motion.div
-      whileHover={{ y: -4 }}
-      transition={{ duration: 0.3 }}
-      className={cn("h-full", className)}
+    <div
+      className={cn(
+        "h-full transition-transform duration-300 hover:-translate-y-1",
+        className
+      )}
     >
       <Card className="group h-full transition-all duration-300 hover:border-gold/40 hover:shadow-lg">
         <CardContent className="flex h-full flex-col items-center p-8 text-center">
@@ -37,6 +37,6 @@ export function CompanyCard({
           </p>
         </CardContent>
       </Card>
-    </motion.div>
+    </div>
   );
 }

@@ -3,6 +3,7 @@ import { Poppins, Inter } from "next/font/google";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { PageBackground } from "@/components/layout/page-background";
+import { FloatingContact } from "@/components/layout/floating-contact";
 import { COMPANY } from "@/lib/constants";
 import "./globals.css";
 
@@ -33,6 +34,13 @@ export const metadata: Metadata = {
     "sale-leaseback",
     "IBEX Investments Group",
   ],
+  icons: {
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/icon.png", type: "image/png", sizes: "512x512" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180" }],
+  },
   openGraph: {
     title: COMPANY.name,
     description: COMPANY.description,
@@ -54,6 +62,7 @@ export default function RootLayout({
           <Navbar />
           <main>{children}</main>
           <Footer />
+          <FloatingContact />
         </div>
       </body>
     </html>

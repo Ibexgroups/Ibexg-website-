@@ -43,9 +43,10 @@ npm start
 
 ## Company Info
 
-- **Owner:** Zaied Musleh
-- **Address:** 55 Calvarese Dr, Bear, DE 19701, United States
-- **Phone:** +1 (504) 595-7385
+- **CEO:** Zaied Musleh
+- **Vice President:** Abdilaziz Altahri
+- **Address:** 45 E Main Street, Unit 203, Newark, DE 19711, United States
+- **Phone:** +1 (347) 613-9829
 - **Email:** info@ibexinvestments.com
 
 ## Deploy

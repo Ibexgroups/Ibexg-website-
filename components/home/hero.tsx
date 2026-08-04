@@ -1,79 +1,196 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { BrandButton } from "@/components/ui/brand-button";
 import { COMPANY } from "@/lib/constants";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-const HERO_IMAGES = [
-  { src: "/hero/01-analysis.jpg", alt: "Market analysis and investment insight" },
-  { src: "/hero/02-buildings.jpg", alt: "Commercial real estate and investment growth" },
-  { src: "/hero/03-growth.jpg", alt: "Digital growth and upward performance" },
-  { src: "/hero/04-business.jpg", alt: "Business partnership and lasting success" },
-  { src: "/hero/05-station-night.jpg", alt: "Modern gas station at night" },
-  { src: "/hero/06-fuel-highway.jpg", alt: "Fuel station glowing at night" },
-  { src: "/hero/07-fuel-glow.jpg", alt: "Gas station canopy lights at night" },
-] as const;
+type HeroSlide =
+  | { type: "image"; src: string; position: string }
+  | { type: "video"; src: string; poster: string; position: string };
 
-const SLIDE_MS = 5000;
+/**
+ * Images first = fast first paint.
+ * Large video loads ONLY when that slide is active (no preload).
+ */
+const HERO_SLIDES: HeroSlide[] = [
+  {
+    type: "video",
+    src: "/hero/hero-intro.mp4",
+    poster: "/hero/09-concrete-gas.jpg",
+    position: "object-cover object-center",
+  },
+  { type: "image", src: "/hero/01-refinery-dawn.jpg", position: "object-cover object-[center_42%]" },
+  { type: "image", src: "/hero/06-modern-gas.jpg", position: "object-cover object-center" },
+  { type: "image", src: "/hero/08-timber-canopy.jpg", position: "object-cover object-center" },
+  { type: "image", src: "/hero/09-concrete-gas.jpg", position: "object-cover object-[center_48%]" },
+  { type: "image", src: "/hero/11-shell-night.jpg", position: "object-cover object-[center_52%]" },
+  { type: "image", src: "/hero/16-yx-winter.jpg", position: "object-cover object-[center_55%]" },
+  { type: "image", src: "/hero/18-shell-trails.jpg", position: "object-cover object-[center_48%]" },
+  { type: "image", src: "/hero/19-orange-island.jpg", position: "object-cover object-center" },
+  { type: "image", src: "/hero/20-orkan-mountains.jpg", position: "object-cover object-[center_75%]" },
+  { type: "image", src: "/hero/21-shell-sunrise.jpg", position: "object-cover object-[center_45%]" },
+  { type: "image", src: "/hero/24-station-lit-night.jpg", position: "object-cover object-[center_62%]" },
+  { type: "image", src: "/hero/33-skyline-invest.jpg", position: "object-cover object-[center_40%]" },
+];
+
+const IMAGE_MS = 5000;
+const VIDEO_MS = 12000;
+const FADE_MS = 900;
 
 export function Hero() {
   const [index, setIndex] = useState(0);
-  const safeIndex = ((index % HERO_IMAGES.length) + HERO_IMAGES.length) % HERO_IMAGES.length;
-  const current = HERO_IMAGES[safeIndex];
+  const [videoReady, setVideoReady] = useState(false);
+  const [allowVideo, setAllowVideo] = useState(true);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+
+  const current = HERO_SLIDES[index];
+  const playVideo = allowVideo && current.type === "video";
+  const slideMs = playVideo ? VIDEO_MS : IMAGE_MS;
+
+  // Skip video on Save-Data / very slow networks so the site stays snappy
+  useEffect(() => {
+    const nav = navigator as Navigator & {
+      connection?: { saveData?: boolean; effectiveType?: string };
+    };
+    const c = nav.connection;
+    if (
+      c?.saveData ||
+      c?.effectiveType === "2g" ||
+      c?.effectiveType === "slow-2g"
+    ) {
+      setAllowVideo(false);
+    }
+  }, []);
 
   useEffect(() => {
-    setIndex((prev) => prev % HERO_IMAGES.length);
-
     const id = window.setInterval(() => {
-      setIndex((prev) => (prev + 1) % HERO_IMAGES.length);
-    }, SLIDE_MS);
+      setIndex((prev) => (prev + 1) % HERO_SLIDES.length);
+    }, slideMs);
     return () => window.clearInterval(id);
-  }, []);
+  }, [index, slideMs]);
+
+  // Load / play video only while that slide is active
+  useEffect(() => {
+    const el = videoRef.current;
+    if (!playVideo || current.type !== "video") {
+      setVideoReady(false);
+      if (el) {
+        el.pause();
+        el.removeAttribute("src");
+        el.load();
+      }
+      return;
+    }
+    if (!el) return;
+    el.src = current.src;
+    el.load();
+    const onCanPlay = () => {
+      setVideoReady(true);
+      void el.play().catch(() => {});
+    };
+    el.addEventListener("canplay", onCanPlay, { once: true });
+    return () => el.removeEventListener("canplay", onCanPlay);
+  }, [playVideo, current]);
+
+  // Warm next image only (not video)
+  useEffect(() => {
+    const next = HERO_SLIDES[(index + 1) % HERO_SLIDES.length];
+    if (next.type === "image") {
+      const img = new window.Image();
+      img.src = next.src;
+    }
+  }, [index]);
 
   return (
     <section className="relative flex min-h-screen items-center overflow-hidden">
-      {/* Auto-rotating full-bleed backgrounds */}
-      <div className="absolute inset-0" aria-hidden="true">
-        <AnimatePresence mode="sync" initial={false}>
-          <motion.div
-            key={current.src}
-            initial={{ opacity: 0, scale: 1.06 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-            className="absolute inset-0"
-          >
-            <Image
-              src={current.src}
-              alt=""
-              fill
-              priority={safeIndex === 0}
-              quality={90}
-              sizes="100vw"
-              className="object-cover object-center"
-            />
-          </motion.div>
-        </AnimatePresence>
+      <div className="absolute inset-0 bg-charcoal" aria-hidden="true">
+        {HERO_SLIDES.map((slide, i) => {
+          const active = i === index;
+          // Only keep nearby slides mounted (perf)
+          const near =
+            active ||
+            i === (index + 1) % HERO_SLIDES.length ||
+            i === (index - 1 + HERO_SLIDES.length) % HERO_SLIDES.length;
+          if (!near && !active) return null;
+
+          return (
+            <div
+              key={slide.src}
+              className={cn(
+                "absolute inset-0 transition-opacity ease-in-out will-change-[opacity]",
+                active ? "opacity-100" : "opacity-0"
+              )}
+              style={{
+                transitionDuration: `${FADE_MS}ms`,
+                zIndex: active ? 1 : 0,
+                pointerEvents: "none",
+              }}
+            >
+              {slide.type === "video" ? (
+                <>
+                  {/* Poster shows instantly; video loads only when active + allowed */}
+                  <Image
+                    src={slide.poster}
+                    alt=""
+                    fill
+                    unoptimized
+                    priority
+                    sizes="100vw"
+                    className={cn(
+                      "object-cover transition-opacity duration-500",
+                      allowVideo && videoReady && active
+                        ? "opacity-0"
+                        : "opacity-100",
+                      slide.position.replace("object-cover ", "")
+                    )}
+                  />
+                  {allowVideo && active && (
+                    <video
+                      ref={videoRef}
+                      className={cn(
+                        "absolute inset-0 h-full w-full transition-opacity duration-500",
+                        videoReady ? "opacity-100" : "opacity-0",
+                        slide.position
+                      )}
+                      muted
+                      playsInline
+                      preload="auto"
+                      poster={slide.poster}
+                    />
+                  )}
+                </>
+              ) : (
+                <Image
+                  src={slide.src}
+                  alt=""
+                  fill
+                  priority={i === 0}
+                  quality={85}
+                  sizes="100vw"
+                  className={slide.position}
+                />
+              )}
+            </div>
+          );
+        })}
       </div>
 
-      {/* Left-weighted charcoal overlay for premium brand block */}
       <div
-        className="absolute inset-0 bg-gradient-to-r from-charcoal/92 via-charcoal/55 to-charcoal/20"
+        className="absolute inset-0 z-[2] bg-gradient-to-r from-charcoal/92 via-charcoal/55 to-charcoal/20"
         aria-hidden="true"
       />
       <div
-        className="absolute inset-0 bg-gradient-to-b from-charcoal/45 via-transparent to-charcoal/75"
+        className="absolute inset-0 z-[2] bg-gradient-to-b from-charcoal/45 via-transparent to-charcoal/75"
         aria-hidden="true"
       />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl px-4 py-28 sm:px-6 lg:px-8 lg:py-32">
         <div className="max-w-2xl text-left">
-          {/* Circular logo + contact — TAIBA-style brand block */}
           <motion.div
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
@@ -115,6 +232,9 @@ export function Hero() {
               >
                 {COMPANY.phone}
               </a>
+              <p className="pt-1 text-sm font-medium tracking-wide text-gold/90 sm:text-base">
+                Building America&apos;s Premier Fuel &amp; Real Estate Network
+              </p>
             </div>
           </motion.div>
 
@@ -158,17 +278,16 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Slide indicators */}
-      <div className="absolute bottom-16 left-1/2 z-10 flex -translate-x-1/2 items-center gap-2 sm:left-auto sm:right-8 sm:translate-x-0 lg:right-12">
-        {HERO_IMAGES.map((img, i) => (
+      <div className="absolute bottom-16 left-1/2 z-10 flex max-w-[90vw] flex-wrap items-center justify-center gap-2 sm:left-auto sm:right-8 sm:translate-x-0 lg:right-12">
+        {HERO_SLIDES.map((slide, i) => (
           <button
-            key={img.src}
+            key={slide.src}
             type="button"
             aria-label={`Show background ${i + 1}`}
             onClick={() => setIndex(i)}
             className={cn(
               "h-1.5 rounded-full transition-all duration-500",
-              i === safeIndex
+              i === index
                 ? "w-8 bg-gold shadow-[0_0_10px_rgba(212,175,55,0.55)]"
                 : "w-1.5 bg-white/35 hover:bg-white/60"
             )}
