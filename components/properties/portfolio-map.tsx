@@ -127,8 +127,9 @@ export function PortfolioMap() {
                   <Popup>
                     <div className="min-w-[180px] text-sm">
                       <p className="font-semibold text-charcoal">{loc.address}</p>
-                      <p className="mt-1 text-gold font-medium">{loc.price}</p>
-                      <p className="text-xs text-muted">{loc.status}</p>
+                      <p className="mt-1 text-xs text-muted">
+                        {loc.state} · {loc.status}
+                      </p>
                       <a
                         href={googleMapsLink(loc.address)}
                         target="_blank"
@@ -168,7 +169,6 @@ export function PortfolioMap() {
                       {loc.state} · {loc.status}
                     </p>
                     <div className="mt-1.5 flex flex-wrap items-center gap-2">
-                      <span className="text-sm font-semibold text-gold">{loc.price}</span>
                       <span className="rounded-full bg-charcoal/5 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-charcoal/60">
                         {loc.fuelContract}
                       </span>

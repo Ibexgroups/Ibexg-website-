@@ -72,7 +72,6 @@ export function PropertiesContent() {
                     <thead className="bg-charcoal text-white">
                       <tr>
                         <th className="px-4 py-3 font-semibold">Property</th>
-                        <th className="px-4 py-3 font-semibold">Asking Price</th>
                         <th className="px-4 py-3 font-semibold">Status</th>
                         <th className="px-4 py-3 font-semibold">Fuel Contract</th>
                       </tr>
@@ -93,7 +92,6 @@ export function PropertiesContent() {
                               {row.address}
                             </a>
                           </td>
-                          <td className="px-4 py-3 text-gold font-semibold">{row.price}</td>
                           <td className="px-4 py-3 text-muted">{row.status}</td>
                           <td className="px-4 py-3 text-muted">{row.fuelContract}</td>
                         </tr>
