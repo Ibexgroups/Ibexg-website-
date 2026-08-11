@@ -135,16 +135,24 @@ export function Footer() {
                   {COMPANY.phone}
                 </a>
               </li>
-              <li className="flex items-center gap-3">
-                <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold/10 text-gold">
+              <li className="flex items-start gap-3">
+                <span className="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gold/10 text-gold">
                   <Mail className="h-4 w-4" aria-hidden="true" />
                 </span>
-                <a
-                  href={`mailto:${COMPANY.email}`}
-                  className="text-sm text-white/60 transition-colors hover:text-gold"
-                >
-                  {COMPANY.email}
-                </a>
+                <div className="flex flex-col gap-1">
+                  <a
+                    href={`mailto:${COMPANY.email}`}
+                    className="text-sm text-white/60 transition-colors hover:text-gold"
+                  >
+                    {COMPANY.email}
+                  </a>
+                  <a
+                    href={`mailto:${COMPANY.contactEmail}`}
+                    className="text-sm text-white/60 transition-colors hover:text-gold"
+                  >
+                    {COMPANY.contactEmail}
+                  </a>
+                </div>
               </li>
             </ul>
           </div>

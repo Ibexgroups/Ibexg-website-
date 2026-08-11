@@ -170,7 +170,7 @@ Git ignores oversized source videos (GitHub size limits). The site uses compress
 | Founded | 2006 |
 | Address | 45 E Main Street, Unit 203, Newark, DE 19711, United States |
 | Phone | +1 (347) 613-9829 |
-| Email | info@ibexinvestments.com |
+| Email | info@ibexinvestment.com · contact@ibexinvestment.com |
 
 ---
 

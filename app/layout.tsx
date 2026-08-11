@@ -21,6 +21,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://ibexinvestment.com"),
   title: {
     default: `${COMPANY.name} | ${COMPANY.tagline}`,
     template: `%s | ${COMPANY.name}`,
@@ -46,6 +47,8 @@ export const metadata: Metadata = {
     description: COMPANY.description,
     type: "website",
     locale: "en_US",
+    url: "https://ibexinvestment.com",
+    siteName: COMPANY.name,
   },
 };
 

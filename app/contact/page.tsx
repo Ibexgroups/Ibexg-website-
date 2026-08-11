@@ -70,6 +70,12 @@ export default function ContactPage() {
                       >
                         {COMPANY.email}
                       </a>
+                      <a
+                        href={`mailto:${COMPANY.contactEmail}`}
+                        className="mt-1 block text-sm text-muted-foreground transition-colors hover:text-gold"
+                      >
+                        {COMPANY.contactEmail}
+                      </a>
                     </div>
                   </div>
 

@@ -20,7 +20,8 @@ export const COMPANY = {
   phoneHref: "+13476139829",
   /** Digits only for wa.me links */
   whatsapp: "13476139829",
-  email: "info@ibexinvestments.com",
+  email: "info@ibexinvestment.com",
+  contactEmail: "contact@ibexinvestment.com",
 } as const;
 
 export const LEADERSHIP = [
