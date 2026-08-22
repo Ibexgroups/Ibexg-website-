@@ -14,13 +14,14 @@ type HeroSlide =
   | { type: "video"; src: string; poster: string; position: string };
 
 /**
- * Images first = fast first paint.
- * Large video loads ONLY when that slide is active (no preload).
+ * Video first, then images.
+ * Shows poster photo while the large video buffers (better than a black screen).
+ * Slide timer waits until the video is actually playing.
  */
 const HERO_SLIDES: HeroSlide[] = [
   {
     type: "video",
-    src: "/hero/hero-intro.mp4",
+    src: "/hero/18370454-uhd_3840_2160_30fps.mp4",
     poster: "/hero/09-concrete-gas.jpg",
     position: "object-cover object-center",
   },
@@ -67,12 +68,14 @@ export function Hero() {
     }
   }, []);
 
+  // Don't advance past the video slide until it has started playing
   useEffect(() => {
+    if (playVideo && !videoReady) return;
     const id = window.setInterval(() => {
       setIndex((prev) => (prev + 1) % HERO_SLIDES.length);
     }, slideMs);
     return () => window.clearInterval(id);
-  }, [index, slideMs]);
+  }, [index, slideMs, playVideo, videoReady]);
 
   // Load / play video only while that slide is active
   useEffect(() => {
@@ -87,14 +90,19 @@ export function Hero() {
       return;
     }
     if (!el) return;
+    setVideoReady(false);
     el.src = current.src;
     el.load();
-    const onCanPlay = () => {
+    const onReady = () => {
       setVideoReady(true);
       void el.play().catch(() => {});
     };
-    el.addEventListener("canplay", onCanPlay, { once: true });
-    return () => el.removeEventListener("canplay", onCanPlay);
+    el.addEventListener("loadeddata", onReady);
+    el.addEventListener("canplay", onReady);
+    return () => {
+      el.removeEventListener("loadeddata", onReady);
+      el.removeEventListener("canplay", onReady);
+    };
   }, [playVideo, current]);
 
   // Warm next image only (not video)
@@ -133,7 +141,7 @@ export function Hero() {
             >
               {slide.type === "video" ? (
                 <>
-                  {/* Poster shows instantly; video loads only when active + allowed */}
+                  {/* Poster while video buffers — looks better than a black screen */}
                   <Image
                     src={slide.poster}
                     alt=""
@@ -160,6 +168,7 @@ export function Hero() {
                       muted
                       playsInline
                       preload="auto"
+                      autoPlay
                       poster={slide.poster}
                     />
                   )}
@@ -169,7 +178,7 @@ export function Hero() {
                   src={slide.src}
                   alt=""
                   fill
-                  priority={i === 0}
+                  priority={i === 1}
                   quality={85}
                   sizes="100vw"
                   className={slide.position}
