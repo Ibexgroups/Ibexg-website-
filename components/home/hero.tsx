@@ -21,7 +21,7 @@ type HeroSlide =
 const HERO_SLIDES: HeroSlide[] = [
   {
     type: "video",
-    src: "/hero/18370454-uhd_3840_2160_30fps.mp4",
+    src: "/hero/hero-cinematic-1080.mp4",
     poster: "/hero/09-concrete-gas.jpg",
     position: "object-cover object-center",
   },
