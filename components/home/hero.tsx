@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
@@ -11,17 +11,24 @@ import { cn } from "@/lib/utils";
 
 type HeroSlide =
   | { type: "image"; src: string; position: string }
-  | { type: "video"; src: string; poster: string; position: string };
+  | {
+      type: "video";
+      src: string;
+      mobileSrc: string;
+      poster: string;
+      position: string;
+    };
 
 /**
  * Video first, then images.
- * Shows poster photo while the large video buffers (better than a black screen).
- * Slide timer waits until the video is actually playing.
+ * Mobile uses a lighter 720p file; desktop keeps 1080p.
+ * Poster shows while buffering. Timer waits until playback starts (with timeout).
  */
 const HERO_SLIDES: HeroSlide[] = [
   {
     type: "video",
     src: "/hero/hero-cinematic-1080.mp4",
+    mobileSrc: "/hero/hero-cinematic-mobile.mp4",
     poster: "/hero/09-concrete-gas.jpg",
     position: "object-cover object-center",
   },
@@ -42,68 +49,106 @@ const HERO_SLIDES: HeroSlide[] = [
 const IMAGE_MS = 5000;
 const VIDEO_MS = 12000;
 const FADE_MS = 900;
+const VIDEO_LOAD_TIMEOUT_MS = 10000;
 
 export function Hero() {
   const [index, setIndex] = useState(0);
   const [videoReady, setVideoReady] = useState(false);
-  const [allowVideo, setAllowVideo] = useState(true);
+  const [preferMobileVideo, setPreferMobileVideo] = useState(true);
   const videoRef = useRef<HTMLVideoElement | null>(null);
+  const playedOnceRef = useRef(false);
 
   const current = HERO_SLIDES[index];
-  const playVideo = allowVideo && current.type === "video";
-  const slideMs = playVideo ? VIDEO_MS : IMAGE_MS;
+  const isVideoSlide = current.type === "video";
+  const videoSrc =
+    isVideoSlide
+      ? preferMobileVideo
+        ? current.mobileSrc
+        : current.src
+      : null;
+  const playVideo = isVideoSlide;
+  const slideMs = playVideo && videoReady ? VIDEO_MS : IMAGE_MS;
 
-  // Skip video on Save-Data / very slow networks so the site stays snappy
+  // Prefer lighter file on phones / narrow screens (never disable video)
   useEffect(() => {
-    const nav = navigator as Navigator & {
-      connection?: { saveData?: boolean; effectiveType?: string };
-    };
-    const c = nav.connection;
-    if (
-      c?.saveData ||
-      c?.effectiveType === "2g" ||
-      c?.effectiveType === "slow-2g"
-    ) {
-      setAllowVideo(false);
-    }
+    const mq = window.matchMedia("(max-width: 900px)");
+    const sync = () => setPreferMobileVideo(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
   }, []);
 
-  // Don't advance past the video slide until it has started playing
+  // Advance slides; if video never starts, don't stay stuck forever
   useEffect(() => {
-    if (playVideo && !videoReady) return;
+    if (playVideo && !videoReady) {
+      const failSafe = window.setTimeout(() => {
+        setIndex((prev) => (prev + 1) % HERO_SLIDES.length);
+      }, VIDEO_LOAD_TIMEOUT_MS);
+      return () => window.clearTimeout(failSafe);
+    }
     const id = window.setInterval(() => {
       setIndex((prev) => (prev + 1) % HERO_SLIDES.length);
     }, slideMs);
     return () => window.clearInterval(id);
   }, [index, slideMs, playVideo, videoReady]);
 
-  // Load / play video only while that slide is active
-  useEffect(() => {
+  // Load / play video with iOS-safe muted + playsInline
+  useLayoutEffect(() => {
     const el = videoRef.current;
-    if (!playVideo || current.type !== "video") {
+    if (!playVideo || !videoSrc || !el) {
       setVideoReady(false);
-      if (el) {
-        el.pause();
-        el.removeAttribute("src");
-        el.load();
-      }
+      if (el) el.pause();
       return;
     }
-    if (!el) return;
+
     setVideoReady(false);
-    el.src = current.src;
-    el.load();
-    const onReady = () => {
+    playedOnceRef.current = false;
+
+    el.muted = true;
+    el.defaultMuted = true;
+    el.playsInline = true;
+    el.setAttribute("muted", "");
+    el.setAttribute("playsinline", "");
+    el.setAttribute("webkit-playsinline", "");
+
+    const markPlaying = () => {
+      if (playedOnceRef.current) return;
+      playedOnceRef.current = true;
       setVideoReady(true);
-      void el.play().catch(() => {});
     };
-    el.addEventListener("loadeddata", onReady);
-    el.addEventListener("canplay", onReady);
+
+    const tryPlay = () => {
+      el.muted = true;
+      void el.play().then(markPlaying).catch(() => {
+        // Autoplay blocked until first gesture
+      });
+    };
+
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") tryPlay();
+    };
+
+    el.src = videoSrc;
+    el.load();
+    el.addEventListener("loadeddata", tryPlay);
+    el.addEventListener("canplay", tryPlay);
+    el.addEventListener("playing", markPlaying);
+    document.addEventListener("visibilitychange", onVisibility);
+    document.addEventListener("touchstart", tryPlay, { once: true, passive: true });
+    document.addEventListener("click", tryPlay, { once: true });
+
+    tryPlay();
+
     return () => {
-      el.removeEventListener("loadeddata", onReady);
-      el.removeEventListener("canplay", onReady);
+      el.removeEventListener("loadeddata", tryPlay);
+      el.removeEventListener("canplay", tryPlay);
+      el.removeEventListener("playing", markPlaying);
+      document.removeEventListener("visibilitychange", onVisibility);
+      document.removeEventListener("touchstart", tryPlay);
+      document.removeEventListener("click", tryPlay);
+      el.pause();
     };
-  }, [playVideo, current]);
+  }, [playVideo, videoSrc, index]);
 
   // Warm next image only (not video)
   useEffect(() => {
@@ -151,27 +196,23 @@ export function Hero() {
                     sizes="100vw"
                     className={cn(
                       "object-cover transition-opacity duration-500",
-                      allowVideo && videoReady && active
-                        ? "opacity-0"
-                        : "opacity-100",
+                      videoReady && active ? "opacity-0" : "opacity-100",
                       slide.position.replace("object-cover ", "")
                     )}
                   />
-                  {allowVideo && active && (
-                    <video
-                      ref={videoRef}
-                      className={cn(
-                        "absolute inset-0 h-full w-full transition-opacity duration-500",
-                        videoReady ? "opacity-100" : "opacity-0",
-                        slide.position
-                      )}
-                      muted
-                      playsInline
-                      preload="auto"
-                      autoPlay
-                      poster={slide.poster}
-                    />
-                  )}
+                  <video
+                    ref={videoRef}
+                    className={cn(
+                      "absolute inset-0 h-full w-full transition-opacity duration-500",
+                      videoReady && active ? "opacity-100" : "opacity-0",
+                      slide.position
+                    )}
+                    muted
+                    playsInline
+                    autoPlay
+                    preload="auto"
+                    poster={slide.poster}
+                  />
                 </>
               ) : (
                 <Image
