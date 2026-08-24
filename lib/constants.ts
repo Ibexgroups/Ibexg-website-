@@ -35,6 +35,11 @@ export const LEADERSHIP = [
     title: "Vice President",
     shortTitle: "Vice President",
   },
+  {
+    name: "Ali Sharwan",
+    title: "Manager",
+    shortTitle: "Manager",
+  },
 ] as const;
 
 export const NAV_LINKS = [

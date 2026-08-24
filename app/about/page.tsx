@@ -33,21 +33,21 @@ export default function AboutPage() {
               />
               <div className="space-y-4 text-muted leading-relaxed">
                 <p>
-                  Founded in {COMPANY.founded}, IBEX Investments Group has built nearly two decades
-                  of industry experience in the gas station and convenience retail sector. We
-                  specialize in acquiring, operating, improving, and expanding gas stations and
-                  commercial properties across multiple states in the United States.
+                  IBEX Investments Group started in {COMPANY.founded}. For nearly twenty years
+                  we&apos;ve bought, operated, and grown gas stations and commercial properties
+                  across multiple U.S. states. It&apos;s the same work we set out to do from day
+                  one.
                 </p>
                 <p>
-                  Under the leadership of CEO {COMPANY.ceo} and Vice President{" "}
-                  {COMPANY.vicePresident}, IBEX has grown a $200M+ asset portfolio with 90+
-                  operating locations. Our trusted fuel distribution network and multi-state
-                  operations support long-term investor partnerships and continuous expansion.
+                  That progress has come under CEO {COMPANY.ceo}, Vice President{" "}
+                  {COMPANY.vicePresident}, and Manager Ali Sharwan. With them at the helm,
+                  we&apos;ve built a $200M+ portfolio and more than 90 operating locations, plus
+                  a fuel network that keeps our sites and partners supplied.
                 </p>
                 <p>
-                  We remain committed to sustainable growth and operational excellence—delivering
-                  reliable performance for property owners, investors, franchise partners, and the
-                  communities we serve.
+                  We care about doing deals fairly and running locations well for the owners who
+                  sell to us, the investors who work with us, our franchise partners, and the
+                  communities where we operate.
                 </p>
               </div>
             </AnimatedSection>
@@ -56,10 +56,10 @@ export default function AboutPage() {
               <div className="rounded-2xl bg-navy p-8 md:p-10">
                 <h3 className="font-heading text-2xl font-bold text-white">Leadership</h3>
                 <p className="mt-4 text-white/70 leading-relaxed">
-                  Led by CEO {COMPANY.ceo} and Vice President {COMPANY.vicePresident}, IBEX
-                  Investments Group is built on integrity, growth, and excellence — guiding the
-                  company from its founding in {COMPANY.founded} to a multi-state investment
-                  organization with a substantial commercial asset portfolio.
+                  CEO {COMPANY.ceo}, Vice President {COMPANY.vicePresident}, and Manager Ali
+                  Sharwan lead IBEX day to day. Since {COMPANY.founded}, they&apos;ve grown the
+                  company from its early days into a multi-state group with a strong commercial
+                  portfolio.
                 </p>
                 <div className="mt-8 space-y-6 border-t border-white/10 pt-8">
                   {LEADERSHIP.map((person) => (
