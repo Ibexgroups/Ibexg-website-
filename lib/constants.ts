@@ -4,6 +4,7 @@ export const COMPANY = {
   owner: "Zaied Musleh",
   ceo: "Zaied Musleh",
   vicePresident: "Abdilaziz Altahri",
+  manager: "Ali Sharwan",
   founded: 2006,
   tagline: "Strong Foundation • Smarter Futures • Lasting Legacy",
   description:
@@ -34,6 +35,11 @@ export const LEADERSHIP = [
     name: "Abdilaziz Altahri",
     title: "Vice President",
     shortTitle: "Vice President",
+  },
+  {
+    name: "Ali Sharwan",
+    title: "Manager",
+    shortTitle: "Manager",
   },
 ] as const;
 
