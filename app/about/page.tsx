@@ -39,10 +39,10 @@ export default function AboutPage() {
                   one.
                 </p>
                 <p>
-                  That progress has come under CEO {COMPANY.ceo}, Vice President{" "}
-                  {COMPANY.vicePresident}, and Manager Ali Sharwan. With them at the helm,
-                  we&apos;ve built a $200M+ portfolio and more than 90 operating locations, plus
-                  a fuel network that keeps our sites and partners supplied.
+                  That progress has come under CEO {COMPANY.ceo} and Vice President{" "}
+                  {COMPANY.vicePresident}. With them at the helm, we&apos;ve built a $200M+
+                  portfolio and more than 90 operating locations, plus a fuel network that keeps
+                  our sites and partners supplied.
                 </p>
                 <p>
                   We care about doing deals fairly and running locations well for the owners who
@@ -56,10 +56,9 @@ export default function AboutPage() {
               <div className="rounded-2xl bg-navy p-8 md:p-10">
                 <h3 className="font-heading text-2xl font-bold text-white">Leadership</h3>
                 <p className="mt-4 text-white/70 leading-relaxed">
-                  CEO {COMPANY.ceo}, Vice President {COMPANY.vicePresident}, and Manager Ali
-                  Sharwan lead IBEX day to day. Since {COMPANY.founded}, they&apos;ve grown the
-                  company from its early days into a multi-state group with a strong commercial
-                  portfolio.
+                  CEO {COMPANY.ceo} and Vice President {COMPANY.vicePresident} lead IBEX day to
+                  day. Since {COMPANY.founded}, they&apos;ve grown the company from its early
+                  days into a multi-state group with a strong commercial portfolio.
                 </p>
                 <div className="mt-8 space-y-6 border-t border-white/10 pt-8">
                   {LEADERSHIP.map((person) => (
@@ -68,22 +67,6 @@ export default function AboutPage() {
                       <p className="mt-1 font-heading text-xl font-semibold text-gold">
                         {person.name}
                       </p>
-                      {"email" in person && (
-                        <a
-                          href={`mailto:${person.email}`}
-                          className="mt-2 block text-sm text-white/70 transition-colors hover:text-gold"
-                        >
-                          {person.email}
-                        </a>
-                      )}
-                      {"phone" in person && (
-                        <a
-                          href={`tel:${person.phoneHref}`}
-                          className="mt-1 block text-sm text-white/70 transition-colors hover:text-gold"
-                        >
-                          {person.phone}
-                        </a>
-                      )}
                     </div>
                   ))}
                 </div>
