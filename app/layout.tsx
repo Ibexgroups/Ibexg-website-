@@ -58,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable} ${inter.variable} scroll-smooth`}>
+    <html lang="en" className={`${poppins.variable} ${inter.variable}`}>
       <body className="relative min-h-screen bg-transparent font-body text-foreground antialiased">
         <PageBackground />
         <div className="relative z-10">

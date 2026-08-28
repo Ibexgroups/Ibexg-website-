@@ -1,9 +1,9 @@
 "use client";
 
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { AnimatedSection } from "@/components/shared/animated-section";
 import { SectionTitle } from "@/components/shared/section-title";
 import { BrandButton } from "@/components/ui/brand-button";
@@ -19,6 +19,18 @@ const HIGHLIGHTS = [
 
 export function AboutPreview() {
   const sectionRef = useRef<HTMLElement>(null);
+  const reduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = useState(false);
+  const parallaxEnabled = !reduceMotion && !isMobile;
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 900px)");
+    const sync = () => setIsMobile(mq.matches);
+    sync();
+    mq.addEventListener("change", sync);
+    return () => mq.removeEventListener("change", sync);
+  }, []);
+
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start end", "end start"],
@@ -51,15 +63,19 @@ export function AboutPreview() {
       {/* Scroll-reactive IBEX logo watermark */}
       <motion.div
         className="pointer-events-none absolute inset-0 z-0 flex items-center justify-center"
-        style={{ y: logoY }}
+        style={parallaxEnabled ? { y: logoY } : undefined}
         aria-hidden="true"
       >
         <motion.div
-          style={{ scale: logoScale, opacity: logoOpacity }}
+          style={
+            parallaxEnabled
+              ? { scale: logoScale, opacity: logoOpacity }
+              : { scale: 1, opacity: 0.16 }
+          }
           className="relative"
         >
           <motion.div
-            style={{ opacity: glowOpacity }}
+            style={parallaxEnabled ? { opacity: glowOpacity } : { opacity: 0.4 }}
             className="absolute left-1/2 top-1/2 h-[min(70vw,520px)] w-[min(70vw,520px)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(212,175,55,0.35)_0%,transparent_68%)] blur-2xl"
           />
           <div className="relative h-[min(72vw,480px)] w-[min(72vw,480px)]">

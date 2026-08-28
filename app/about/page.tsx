@@ -68,6 +68,22 @@ export default function AboutPage() {
                       <p className="mt-1 font-heading text-xl font-semibold text-gold">
                         {person.name}
                       </p>
+                      {"email" in person && (
+                        <a
+                          href={`mailto:${person.email}`}
+                          className="mt-2 block text-sm text-white/70 transition-colors hover:text-gold"
+                        >
+                          {person.email}
+                        </a>
+                      )}
+                      {"phone" in person && (
+                        <a
+                          href={`tel:${person.phoneHref}`}
+                          className="mt-1 block text-sm text-white/70 transition-colors hover:text-gold"
+                        >
+                          {person.phone}
+                        </a>
+                      )}
                     </div>
                   ))}
                 </div>

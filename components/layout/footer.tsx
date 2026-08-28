@@ -171,6 +171,10 @@ export function Footer() {
             <span className="text-gold/80">{COMPANY.vicePresident}</span>
             <span className="text-white/30"> · </span>
             Vice President
+            <span className="mx-2 text-white/25">|</span>
+            <span className="text-gold/80">{COMPANY.manager}</span>
+            <span className="text-white/30"> · </span>
+            Manager
           </p>
         </div>
       </div>
