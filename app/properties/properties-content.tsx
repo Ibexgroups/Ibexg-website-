@@ -23,7 +23,6 @@ const PortfolioMap = dynamic(
 const byState = {
   Texas: PORTFOLIO_LOCATIONS.filter((p) => p.state === "Texas"),
   Louisiana: PORTFOLIO_LOCATIONS.filter((p) => p.state === "Louisiana"),
-  Mississippi: PORTFOLIO_LOCATIONS.filter((p) => p.state === "Mississippi"),
 } as const;
 
 export function PropertiesContent() {
@@ -31,7 +30,7 @@ export function PropertiesContent() {
     <>
       <PageHeader
         title="Our Properties"
-        subtitle="Multi-state portfolio across Texas, Louisiana, and Mississippi — gas stations and related retail assets."
+        subtitle="Multi-state portfolio across Texas and Louisiana — gas stations and related retail assets."
         backgroundImage="/hero/33-skyline-invest.jpg"
       />
 
@@ -57,7 +56,7 @@ export function PropertiesContent() {
             <SectionTitle
               badge="By State"
               title="Portfolio Listings"
-              subtitle={`${PORTFOLIO_LOCATIONS.length} properties across Texas, Louisiana, and Mississippi.`}
+              subtitle={`${PORTFOLIO_LOCATIONS.length} properties across Texas and Louisiana.`}
             />
           </AnimatedSection>
 

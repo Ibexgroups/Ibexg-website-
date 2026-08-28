@@ -19,7 +19,7 @@ import { ExternalLink, MapPin } from "lucide-react";
 
 type Loc = (typeof PORTFOLIO_LOCATIONS)[number];
 
-const STATES = ["All", "Texas", "Louisiana", "Mississippi"] as const;
+const STATES = ["All", "Texas", "Louisiana"] as const;
 
 const goldIcon = L.divIcon({
   className: "",
@@ -69,7 +69,7 @@ export function PortfolioMap() {
             Multi-State Portfolio Map
           </p>
           <p className="text-sm text-muted">
-            {filtered.length} locations · TX · LA · MS
+            {filtered.length} locations · TX · LA
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
