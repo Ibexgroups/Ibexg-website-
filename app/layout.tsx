@@ -4,6 +4,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { PageBackground } from "@/components/layout/page-background";
 import { FloatingContact } from "@/components/layout/floating-contact";
+import { Chatbot } from "@/components/layout/chatbot";
 import { COMPANY } from "@/lib/constants";
 import "./globals.css";
 
@@ -66,6 +67,7 @@ export default function RootLayout({
           <main>{children}</main>
           <Footer />
           <FloatingContact />
+          <Chatbot />
         </div>
       </body>
     </html>

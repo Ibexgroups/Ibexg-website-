@@ -31,7 +31,7 @@ export function FloatingContact() {
 
   return (
     <div
-      className="fixed bottom-5 right-4 z-50 flex flex-col items-center gap-2.5 sm:bottom-6 sm:right-5"
+      className="fixed bottom-[4.75rem] right-4 z-50 flex flex-col items-center gap-2.5 sm:bottom-[5.5rem] sm:right-5"
       aria-label="Quick contact"
     >
       {/* WhatsApp */}
