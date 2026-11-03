@@ -4,6 +4,7 @@ export const COMPANY = {
   owner: "Zaied Musleh",
   ceo: "Zaied Musleh",
   vicePresident: "Abdilaziz Altahri",
+  manager: "Ali Sharwan",
   founded: 2006,
   tagline: "Strong Foundation • Smarter Futures • Lasting Legacy",
   description:
@@ -37,6 +38,11 @@ export const LEADERSHIP = [
     name: "Abdilaziz Altahri",
     title: "Vice President",
     shortTitle: "Vice President",
+  },
+  {
+    name: "Ali Sharwan",
+    title: "Manager",
+    shortTitle: "Manager",
   },
 ] as const;
 
@@ -164,6 +170,73 @@ export const WHY_CHOOSE_US = [
     description:
       "An active growth strategy focused on sustainable expansion and operational excellence.",
     icon: "TrendingUp",
+  },
+] as const;
+
+/** Stuckey's travel centers — Fuel Distribution page */
+export const TRUCK_STOP_PORTFOLIO = {
+  name: "Stuckey's Truck Stops",
+  region: "Texas",
+  count: 8,
+  askingPrice: "$70,000,000",
+  askingNote: "All 8 travel centers",
+  nnnRent: "$450,000/mo",
+  nnnNote: "Well-qualified operating company tenant",
+  fuelVolume: "4,000,000 gal/mo",
+  fuelNote: "Combined, 8 sites",
+  insideSales: "$4,200,000/mo",
+  insideSalesNote: "Gaming about $120,000/mo net",
+  franchises: "Dunkin', Baskin-Robbins, and Turbo Joe",
+} as const;
+
+export const TRUCK_STOPS = [
+  {
+    id: "ts-1",
+    name: "Travel Center West",
+    operator: "Hashmat LLC",
+    address: "36311 Interstate 10 E, Hankamer, TX 77560",
+  },
+  {
+    id: "ts-2",
+    name: "Stuckey's 109",
+    operator: "Chairman LLC",
+    address: "36040 IH 10 E, Anahuac, TX 77514",
+  },
+  {
+    id: "ts-3",
+    name: "Fannett",
+    operator: "High Island Investment LLC",
+    address: "17498 Interstate 10, Beaumont, TX 77705",
+  },
+  {
+    id: "ts-4",
+    name: "Orange",
+    operator: "RBS Beat LLC",
+    address: "12330 Interstate 10, Orange, TX 77630",
+  },
+  {
+    id: "ts-5",
+    name: "Deweyville",
+    operator: "KBR Investment Inc",
+    address: "135 Highway 12 E, Orange, TX 77632",
+  },
+  {
+    id: "ts-6",
+    name: "Angus",
+    operator: "Angus Investment LLC",
+    address: "5764 S IH 45 W, Corsicana, TX 75109",
+  },
+  {
+    id: "ts-7",
+    name: "Nacogdoches",
+    operator: "RIR Venture LLC",
+    address: "14084 N US Hwy 59, Nacogdoches, TX 75965",
+  },
+  {
+    id: "ts-8",
+    name: "Corsicana",
+    operator: "Corsicana Investors LLC",
+    address: "6011 S IH 45 E, Corsicana, TX 75109",
   },
 ] as const;
 
@@ -404,6 +477,62 @@ export const PORTFOLIO_LOCATIONS = [
     fuelContract: "Open Gas Contract",
     lat: 32.9545,
     lng: -96.6145,
+  },
+  {
+    id: "tx-4",
+    name: "Sulphur Springs Exxon (Joe's Grocery Mart)",
+    state: "Texas",
+    address: "1234 S Broadway St, Sulphur Springs, TX",
+    price: "$4,900,000",
+    status: "Available",
+    fuelContract: "Exxon",
+    lat: 33.1174284,
+    lng: -95.5957647,
+  },
+  {
+    id: "tx-5",
+    name: "Sulphur Springs Mobil (Bob's Grocery Mart)",
+    state: "Texas",
+    address: "1321 S Broadway St, Sulphur Springs, TX",
+    price: "$2,900,000",
+    status: "Available",
+    fuelContract: "Mobil",
+    lat: 33.1123387,
+    lng: -95.5967166,
+  },
+  // Oklahoma
+  {
+    id: "ok-1",
+    name: "I-35 Travel Plaza",
+    state: "Oklahoma",
+    address: "1317 SE 44th St, Oklahoma City, OK",
+    price: "$5,500,000",
+    status: "Available",
+    fuelContract: "Travel Plaza",
+    lat: 35.4209082,
+    lng: -97.489863,
+  },
+  {
+    id: "ok-2",
+    name: "Corner Express",
+    state: "Oklahoma",
+    address: "2100 SW 59th St, Oklahoma City, OK",
+    price: "$1,400,000",
+    status: "Available",
+    fuelContract: "Corner Express",
+    lat: 35.406131,
+    lng: -97.548089,
+  },
+  {
+    id: "ok-3",
+    name: "Super America",
+    state: "Oklahoma",
+    address: "3609 S Pennsylvania Ave, Oklahoma City, OK",
+    price: "$2,100,000",
+    status: "Available",
+    fuelContract: "Super America",
+    lat: 35.4284671,
+    lng: -97.5484543,
   },
   // Louisiana
   {

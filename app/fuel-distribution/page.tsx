@@ -6,7 +6,7 @@ import { SectionTitle } from "@/components/shared/section-title";
 import { FeatureCard } from "@/components/shared/feature-card";
 import { BrandButton } from "@/components/ui/brand-button";
 import { CTABanner } from "@/components/shared/cta-banner";
-import { COMPANY } from "@/lib/constants";
+import { COMPANY, TRUCK_STOP_PORTFOLIO, TRUCK_STOPS } from "@/lib/constants";
 import { Droplets, Truck, Shield, Clock, Globe, BarChart3 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -54,7 +54,8 @@ export default function FuelDistributionPage() {
                 <p>
                   Whether you need bulk delivery, fleet fueling programs, or retail supply
                   agreements, our experienced team has the infrastructure and expertise to meet
-                  your needs.
+                  your needs. That network includes {TRUCK_STOP_PORTFOLIO.name},{" "}
+                  {TRUCK_STOP_PORTFOLIO.count} Texas travel centers supplied as one portfolio.
                 </p>
               </div>
               <Link href="/contact" className="mt-8 inline-block">
@@ -103,6 +104,106 @@ export default function FuelDistributionPage() {
               </AnimatedSection>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section className="section-padding bg-white">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <AnimatedSection>
+            <SectionTitle
+              badge="Truck Stops"
+              title={TRUCK_STOP_PORTFOLIO.name}
+              subtitle={`${TRUCK_STOP_PORTFOLIO.count} Texas travel centers. Each site carries ${TRUCK_STOP_PORTFOLIO.franchises}.`}
+            />
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.08}>
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {[
+                {
+                  label: "Asking price",
+                  value: TRUCK_STOP_PORTFOLIO.askingPrice,
+                  note: TRUCK_STOP_PORTFOLIO.askingNote,
+                  featured: true,
+                },
+                {
+                  label: "NNN rent",
+                  value: TRUCK_STOP_PORTFOLIO.nnnRent,
+                  note: TRUCK_STOP_PORTFOLIO.nnnNote,
+                  featured: false,
+                },
+                {
+                  label: "Fuel",
+                  value: TRUCK_STOP_PORTFOLIO.fuelVolume,
+                  note: TRUCK_STOP_PORTFOLIO.fuelNote,
+                  featured: false,
+                },
+                {
+                  label: "Inside sales",
+                  value: TRUCK_STOP_PORTFOLIO.insideSales,
+                  note: TRUCK_STOP_PORTFOLIO.insideSalesNote,
+                  featured: false,
+                },
+              ].map((stat) => (
+                <div
+                  key={stat.label}
+                  className={
+                    stat.featured
+                      ? "rounded-2xl bg-navy p-6 text-white"
+                      : "rounded-2xl border border-charcoal/10 bg-ivory p-6"
+                  }
+                >
+                  <p
+                    className={
+                      stat.featured
+                        ? "text-xs font-semibold uppercase tracking-wider text-gold"
+                        : "text-xs font-semibold uppercase tracking-wider text-muted"
+                    }
+                  >
+                    {stat.label}
+                  </p>
+                  <p className="mt-3 font-heading text-2xl font-bold sm:text-3xl">{stat.value}</p>
+                  <p className={stat.featured ? "mt-2 text-sm text-white/70" : "mt-2 text-sm text-muted"}>
+                    {stat.note}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </AnimatedSection>
+
+          <AnimatedSection delay={0.12}>
+            <div className="mt-8 overflow-x-auto rounded-2xl border border-charcoal/10">
+              <table className="min-w-full text-left text-sm">
+                <thead className="bg-navy text-white">
+                  <tr>
+                    <th className="px-4 py-3 font-semibold">#</th>
+                    <th className="px-4 py-3 font-semibold">Site</th>
+                    <th className="px-4 py-3 font-semibold">Operating company</th>
+                    <th className="px-4 py-3 font-semibold">Address</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {TRUCK_STOPS.map((site, i) => (
+                    <tr key={site.id} className={i % 2 === 0 ? "bg-white" : "bg-ivory/60"}>
+                      <td className="px-4 py-3 text-muted">{i + 1}</td>
+                      <td className="px-4 py-3 font-medium text-charcoal">{site.name}</td>
+                      <td className="px-4 py-3 text-muted">{site.operator}</td>
+                      <td className="px-4 py-3">
+                        <a
+                          href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(site.address)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-charcoal hover:text-gold hover:underline"
+                        >
+                          {site.address}
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </AnimatedSection>
         </div>
       </section>
 

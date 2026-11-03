@@ -22,6 +22,7 @@ const PortfolioMap = dynamic(
 
 const byState = {
   Texas: PORTFOLIO_LOCATIONS.filter((p) => p.state === "Texas"),
+  Oklahoma: PORTFOLIO_LOCATIONS.filter((p) => p.state === "Oklahoma"),
   Louisiana: PORTFOLIO_LOCATIONS.filter((p) => p.state === "Louisiana"),
 } as const;
 
@@ -30,7 +31,7 @@ export function PropertiesContent() {
     <>
       <PageHeader
         title="Our Properties"
-        subtitle="Multi-state portfolio across Texas and Louisiana — gas stations and related retail assets."
+        subtitle="Multi-state portfolio across Texas, Oklahoma, and Louisiana — gas stations and related retail assets."
         backgroundImage="/hero/33-skyline-invest.jpg"
       />
 
@@ -56,7 +57,7 @@ export function PropertiesContent() {
             <SectionTitle
               badge="By State"
               title="Portfolio Listings"
-              subtitle={`${PORTFOLIO_LOCATIONS.length} properties across Texas and Louisiana.`}
+              subtitle={`${PORTFOLIO_LOCATIONS.length} properties across Texas, Oklahoma, and Louisiana.`}
             />
           </AnimatedSection>
 
@@ -82,11 +83,18 @@ export function PropertiesContent() {
                           className={i % 2 === 0 ? "bg-white" : "bg-ivory/60"}
                         >
                           <td className="px-4 py-3 font-medium text-charcoal">
+                            {"name" in row && row.name ? (
+                              <p>{row.name}</p>
+                            ) : null}
                             <a
                               href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(row.address)}`}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="hover:text-gold hover:underline"
+                              className={
+                                "name" in row && row.name
+                                  ? "text-sm font-normal text-muted hover:text-gold hover:underline"
+                                  : "hover:text-gold hover:underline"
+                              }
                             >
                               {row.address}
                             </a>

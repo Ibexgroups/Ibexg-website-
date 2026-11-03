@@ -17,6 +17,7 @@ type HeroSlide =
       mobileSrc: string;
       poster: string;
       position: string;
+      durationMs: number;
     };
 
 /**
@@ -31,6 +32,7 @@ const HERO_SLIDES: HeroSlide[] = [
     mobileSrc: "/hero/hero-cinematic-mobile.mp4",
     poster: "/hero/09-concrete-gas.jpg",
     position: "object-cover object-center",
+    durationMs: 11000,
   },
   { type: "image", src: "/hero/01-refinery-dawn.jpg", position: "object-cover object-[center_42%]" },
   { type: "image", src: "/hero/06-modern-gas.jpg", position: "object-cover object-center" },
@@ -38,6 +40,14 @@ const HERO_SLIDES: HeroSlide[] = [
   { type: "image", src: "/hero/09-concrete-gas.jpg", position: "object-cover object-[center_48%]" },
   { type: "image", src: "/hero/11-shell-night.jpg", position: "object-cover object-[center_52%]" },
   { type: "image", src: "/hero/16-yx-winter.jpg", position: "object-cover object-[center_55%]" },
+  {
+    type: "video",
+    src: "/videos/station-cinematic-web.mp4",
+    mobileSrc: "/videos/station-cinematic-web.mp4",
+    poster: "/hero/06-modern-gas.jpg",
+    position: "object-cover object-center",
+    durationMs: 13000,
+  },
   { type: "image", src: "/hero/18-shell-trails.jpg", position: "object-cover object-[center_48%]" },
   { type: "image", src: "/hero/19-orange-island.jpg", position: "object-cover object-center" },
   { type: "image", src: "/hero/20-orkan-mountains.jpg", position: "object-cover object-[center_75%]" },
@@ -47,7 +57,6 @@ const HERO_SLIDES: HeroSlide[] = [
 ];
 
 const IMAGE_MS = 5000;
-const VIDEO_MS = 12000;
 const FADE_MS = 900;
 
 export function Hero() {
@@ -57,7 +66,8 @@ export function Hero() {
 
   const current = HERO_SLIDES[index];
   const isVideoSlide = current.type === "video";
-  const slideMs = isVideoSlide && videoReady ? VIDEO_MS : IMAGE_MS;
+  const slideMs =
+    isVideoSlide && videoReady && current.type === "video" ? current.durationMs : IMAGE_MS;
 
   // Advance slides; stay on video until it can play
   useEffect(() => {
@@ -165,7 +175,7 @@ export function Hero() {
                     )}
                   />
                   <video
-                    ref={videoRef}
+                    ref={active ? videoRef : undefined}
                     className={cn(
                       "absolute inset-0 h-full w-full transition-opacity duration-500",
                       videoReady && active ? "opacity-100" : "opacity-0",

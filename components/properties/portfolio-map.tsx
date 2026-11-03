@@ -19,7 +19,7 @@ import { ExternalLink, MapPin } from "lucide-react";
 
 type Loc = (typeof PORTFOLIO_LOCATIONS)[number];
 
-const STATES = ["All", "Texas", "Louisiana"] as const;
+const STATES = ["All", "Texas", "Oklahoma", "Louisiana"] as const;
 
 const goldIcon = L.divIcon({
   className: "",
@@ -69,7 +69,7 @@ export function PortfolioMap() {
             Multi-State Portfolio Map
           </p>
           <p className="text-sm text-muted">
-            {filtered.length} locations · TX · LA
+            {filtered.length} locations · TX · OK · LA
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -126,7 +126,12 @@ export function PortfolioMap() {
                 >
                   <Popup>
                     <div className="min-w-[180px] text-sm">
-                      <p className="font-semibold text-charcoal">{loc.address}</p>
+                      {"name" in loc && loc.name ? (
+                        <p className="font-semibold text-charcoal">{loc.name}</p>
+                      ) : null}
+                      <p className={"name" in loc && loc.name ? "text-charcoal" : "font-semibold text-charcoal"}>
+                        {loc.address}
+                      </p>
                       <p className="mt-1 text-xs text-muted">
                         {loc.state} · {loc.status}
                       </p>
@@ -162,7 +167,15 @@ export function PortfolioMap() {
                 >
                   <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold" aria-hidden="true" />
                   <div className="min-w-0 flex-1">
-                    <p className="truncate text-sm font-semibold text-charcoal">
+                    {"name" in loc && loc.name ? (
+                      <p className="truncate text-sm font-semibold text-charcoal">{loc.name}</p>
+                    ) : null}
+                    <p
+                      className={cn(
+                        "truncate text-sm text-charcoal",
+                        "name" in loc && loc.name ? "text-muted" : "font-semibold"
+                      )}
+                    >
                       {loc.address}
                     </p>
                     <p className="mt-0.5 text-xs text-muted">
